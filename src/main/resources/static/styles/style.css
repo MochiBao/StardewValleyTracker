@@ -1,0 +1,373 @@
+body {
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.screen {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 50px;
+}
+
+h1 {
+    color: white;
+    text-shadow: 3px 3px 0px #5c3a21, -1px -1px 0px #5c3a21, 1px -1px 0px #5c3a21, -1px 1px 0px #5c3a21;
+    font-size: 3rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.auth-card, .create-farm-panel {
+    background-color: #e5c39e;
+    border: 6px solid #6b3e26;
+    border-style: double;
+    outline: 4px solid #5c3a21;
+    box-shadow: 0 10px 0 rgba(0,0,0,0.2);
+    padding: 30px;
+    margin: 20px auto;
+    width: 350px;
+    border-radius: 0;
+}
+
+h2, h3 {
+    color: #5c3a21;
+    margin-top: 0;
+    text-align: center;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    background-color: #fff4d5;
+    border: 3px solid #6b3e26;
+    color: #5c3a21;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    background-color: #ffffff;
+    border-color: #4CAF50;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: 4px solid #2e5a27;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.secondary-btn, .logout-btn, #back-to-login {
+    background-color: #d32f2f;
+    border-color: #7b1a1a;
+    width: auto;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.farms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.farm-card {
+    background-color: #ffdeb3;
+    border: 4px solid #8b5a2b;
+    padding: 20px;
+    width: 180px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+}
+.delete-farm-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    background-color: #ff4d4d;
+    color: white;
+    border: 2px solid #6d331d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    z-index: 5;
+}
+
+.delete-farm-btn:hover {
+    background-color: #ff0000;
+    transform: scale(1.1);
+}
+.farm-card:hover {
+    background-color: #fce8cd;
+    border-color: #4CAF50;
+    transform: translateY(-5px);
+}
+
+.farm-card h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.farm-card p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #6b3e26;
+}
+
+.header {
+    background: #e5c39e;
+    border: 4px solid #6b3e26;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.collection-grid {
+    background-color: rgba(92, 58, 33, 0.7);
+    padding: 20px;
+    border: 4px solid #6b3e26;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.item-card {
+    filter: grayscale(100%) brightness(40%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.item-card.caught {
+    filter: grayscale(0%) brightness(100%);
+    opacity: 1;
+    border: 3px solid #ffca28;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 202, 40, 0.4);
+}
+
+.item-card:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+.item-card img {
+    max-width: 60px;
+    image-rendering: pixelated;
+}
+
+.tabs {
+    margin-bottom: -4px;
+    display: flex;
+    gap: 5px;
+}
+
+.tab-btn {
+    width: auto;
+    background-color: #8b5a2b;
+    border-bottom: none;
+}
+
+.tab-btn.active {
+    background-color: #4CAF50;
+}
+
+.toggle-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #5c3a21;
+}
+
+.toggle-text a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.stardew-tooltip {
+    position: fixed;
+    z-index: 1000;
+    background-color: #f7d9a0;
+    border: 4px solid #6b3e26;
+    padding: 15px;
+    width: 250px;
+    pointer-events: none;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    text-align: left;
+    white-space: pre-line;
+    min-width: 200px;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.stardew-tooltip:not(.hidden) {
+    opacity: 1;
+}
+
+.tooltip-name {
+    color: #5c3a21;
+    font-size: 20px;
+    margin: 0 0 8px 0;
+    text-align: center;
+    border-bottom: 2px solid #6b3e26;
+    padding-bottom: 5px;
+}
+
+.tooltip-description {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+}
+
+.tooltip-type-box {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 12px;
+    color: #8b5a2b;
+}
+
+.tooltip-type::before {
+    content: '🎣 ';
+}
+
+.seasons-container {
+    display: flex;
+    gap: 5px;
+    margin: 8px 0;
+}
+
+.season-tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.season-tag.spring { background-color: #4CAF50; }
+.season-tag.summer { background-color: #FF9800; }
+.season-tag.fall   { background-color: #8D6E63; }
+.season-tag.winter { background-color: #2196F3; }
+
+.info-row {
+    font-size: 13px;
+    margin-top: 4px;
+    color: #5c3a21;
+}
+
+.price-text {
+    color: #b58900;
+    font-weight: bold;
+}
+
+.empty-category-message {
+    color: white;
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.main-desc {
+    margin-bottom: 8px;
+    line-height: 1.3;
+    font-style: italic;
+    color: #5c3a21;
+}
+
+.total-progress-container {
+    flex-grow: 1;
+    margin: 0 40px;
+    text-align: center;
+}
+
+.progress-label {
+    display: block;
+    font-family: 'Stardew', sans-serif;
+    color: #542d1e;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 25px;
+    background-color: #333; /* Темна підкладка */
+    border: 3px solid #6d331d;
+    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #4cf22c;
+    background-image: linear-gradient(to bottom, #74ff5e, #32a81d);
+    box-shadow: inset -2px 0px 0px #206d12;
+    transition: width 0.4s ease;
+}
+
+.count-text {
+    font-size: 14px;
+    color: #542d1e;
+    font-weight: bold;
+}
+
+.tab-count {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-left: 5px;
+}
+
+.tab-btn.active .tab-count {
+    opacity: 1;
+    color: #fff;
+}

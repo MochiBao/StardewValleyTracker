@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Valley Tracker</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+<div id="auth-screen" class="screen">
+    <h1>Stardew Tracker</h1>
+    <div id="login-card" class="auth-card">
+        <h2>Вхід на ферму</h2>
+        <form id="login-form">
+            <input type="text" id="login-username" placeholder="Ім'я фермера" required>
+            <input type="password" id="login-password" placeholder="Пароль" required>
+            <button type="submit">Увійти</button>
+        </form>
+        <p class="toggle-text">Новий гравець? <a href="#" id="link-to-register">Створити акаунт</a></p>
+    </div>
+
+    <div id="register-card" class="auth-card hidden">
+        <h2>Реєстрація</h2>
+        <form id="register-form">
+            <input type="text" id="reg-username" placeholder="Ім'я" required>
+            <input type="email" id="reg-email" placeholder="Пошта" required>
+            <input type="password" id="reg-password" placeholder="Пароль" required>
+            <button type="submit">Зареєструватися</button>
+        </form>
+        <p class="toggle-text">Вже є акаунт? <a href="#" id="link-to-login">Увійти</a></p>
+    </div>
+</div>
+
+<div id="farm-selection-screen" class="screen hidden">
+    <h1>Ваші ферми</h1>
+    <div id="farms-grid" class="farms-grid"></div>
+    <div class="create-farm-panel">
+        <h3>Створити нове збереження</h3>
+        <input type="text" id="new-farm-name" placeholder="Назва нової ферми" required>
+        <select id="new-farm-type">
+            <option value="Standard">Стандартна ферма</option>
+            <option value="Riverland">Річкова ферма</option>
+            <option value="Forest">Лісова ферма</option>
+            <option value="Hill-top">Гірська ферма</option>
+            <option value="Wilderness">Дика ферма</option>
+        </select>
+        <button id="create-farm-btn">Створити ферму</button>
+    </div>
+    <br>
+    <button id="back-to-login" class="secondary-btn">Вийти з акаунту</button>
+</div>
+
+<div id="app-screen" class="screen hidden">
+    <div class="header">
+        <div class="farm-info">
+            <h1 id="farm-display-name">Ферма</h1>
+            <p id="user-display-name">Фермер: </p>
+        </div>
+
+        <div class="total-progress-container">
+            <span class="progress-label">Загальний прогрес: <span id="total-percent">0%</span></span>
+            <div class="progress-bar-bg">
+                <div id="total-progress-fill" class="progress-fill"></div>
+            </div>
+            <span id="total-count-text" class="count-text">0 / 0</span>
+        </div>
+
+        <button id="logout-btn" class="logout-btn">До вибору ферм</button>
+    </div>
+
+    <div class="tabs" id="category-tabs">
+        <button class="tab-btn active" data-category="Риба">Риба <span class="tab-count">(0/0)</span></button>
+        <button class="tab-btn" data-category="Відправка">Відправка <span class="tab-count">(0/0)</span></button>
+        <button class="tab-btn" data-category="Артефакти">Артефакти <span class="tab-count">(0/0)</span></button>
+        <button class="tab-btn" data-category="Мінерали">Мінерали <span class="tab-count">(0/0)</span></button>
+        <button class="tab-btn" data-category="Їжа">Їжа <span class="tab-count">(0/0)</span></button>
+    </div>
+
+    <div id="collection-grid" class="collection-grid"></div>
+</div>
+
+<div id="stardew-tooltip" class="stardew-tooltip hidden">
+    <h3 class="tooltip-name"></h3>
+    <p class="tooltip-description"></p>
+    <div class="tooltip-type-box"><span class="tooltip-type">Риба</span></div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
