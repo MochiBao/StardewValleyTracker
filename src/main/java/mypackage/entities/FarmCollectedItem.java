@@ -1,6 +1,7 @@
 package mypackage.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,7 +22,8 @@ public class FarmCollectedItem implements Serializable {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @Column(name = "collected_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "collected_at", updatable = false)
     private LocalDateTime collectedAt;
 
     public FarmCollectedItem () {};

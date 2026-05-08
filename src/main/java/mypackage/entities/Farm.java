@@ -2,6 +2,7 @@ package mypackage.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -25,7 +26,8 @@ public class Farm {
     @Column(name = "farm_type", nullable = false, length= 50)
     private String farmType;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalTime createdAt;
 
     @JsonIgnore
