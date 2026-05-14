@@ -1,25 +1,35 @@
 package mypackage.controllers;
 
 import mypackage.entities.FarmCollectedItem;
+import mypackage.events.ItemCollectedEvent;
 import mypackage.services.ProgressService;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/progress")
 public class ProgressController {
     private final ProgressService progressService;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public ProgressController (ProgressService progressService) {
+    public ProgressController (ProgressService progressService, ApplicationEventPublisher eventPublisher) {
         this.progressService = progressService;
+        this.eventPublisher = eventPublisher;
     }
 
     @PostMapping
-    public ResponseEntity<FarmCollectedItem> collectItem(@RequestBody CollectRequest request) {
+    public ResponseEntity<List<String>> collectItem(@RequestBody CollectRequest request) {
         try {
-            FarmCollectedItem result = progressService.collectItem(request.getFarmId(), request.getItemId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            progressService.collectItem(request.getFarmId(), request.getItemId());
+
+            ItemCollectedEvent event = new ItemCollectedEvent(request.getFarmId(), request.getItemId());
+            eventPublisher.publishEvent(event);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(event.getUnlockedAchievements());
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -65,6 +75,5 @@ public class ProgressController {
         }
     }
 }
-
 //ідемпотентність, в чому мінуси використовувати на все один метод, шо таке кешебле, шо таке mvс (module),
 //наскільки мачурні мої ендпоїнти

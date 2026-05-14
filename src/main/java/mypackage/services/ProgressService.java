@@ -4,9 +4,12 @@ import mypackage.entities.Farm;
 import mypackage.entities.FarmCollectedItem;
 import mypackage.entities.FarmCollectedItemId;
 import mypackage.entities.Item;
+import mypackage.events.ItemCollectedEvent;
 import mypackage.repositories.FarmCollectedItemRepository;
 import mypackage.repositories.FarmRepository;
 import mypackage.repositories.ItemRepository;
+
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +20,13 @@ public class ProgressService {
     private final FarmCollectedItemRepository progressRepository;
     private final FarmRepository farmRepository;
     private final ItemRepository itemRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public ProgressService(FarmCollectedItemRepository progressRepository, FarmRepository farmRepository, ItemRepository itemRepository) {
+    public ProgressService(FarmCollectedItemRepository progressRepository, FarmRepository farmRepository, ItemRepository itemRepository, ApplicationEventPublisher eventPublisher) {
         this.progressRepository = progressRepository;
         this.farmRepository = farmRepository;
         this.itemRepository = itemRepository;
+        this.eventPublisher = eventPublisher;
     }
 
 
@@ -44,6 +49,8 @@ public class ProgressService {
         collectedItem.setId(compositeId);
         collectedItem.setFarm(farm);
         collectedItem.setItem(item);
+
+        eventPublisher.publishEvent(new ItemCollectedEvent(farmId, itemId));
 
         return progressRepository.save(collectedItem);
     }

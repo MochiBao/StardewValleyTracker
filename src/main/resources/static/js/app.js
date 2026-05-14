@@ -309,6 +309,10 @@ async function toggleItemProgress(item, element) {
                 caughtIds = caughtIds.filter(id => id !== item.id);
             } else {
                 caughtIds.push(item.id);
+                const achievements = await response.json();
+                if (achievements && achievements.length > 0) {
+                    achievements.forEach(text => showAchievementPopup(text));
+                }
             }
         } else {
             alert("Помилка на сервері.");
@@ -427,4 +431,21 @@ function updateProgressUI() {
             btn.innerText = `(${catCaught}/${catTotal})`;
         }
     });
+}
+
+function showAchievementPopup(text) {
+    const container = document.getElementById('toast-container');
+
+    const toast = document.createElement('div');
+    toast.className = 'achievement-toast';
+    toast.innerHTML = `🏆 <span>${text}</span>`;
+
+    container.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 100);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+    }, 5000);
 }

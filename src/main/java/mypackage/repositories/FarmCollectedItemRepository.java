@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface FarmCollectedItemRepository extends JpaRepository<FarmCollectedItem, FarmCollectedItemId> {
     List<FarmCollectedItem> findAllByFarmId(Long farmId);
+    long countByFarmId(Long farmId);
 }
