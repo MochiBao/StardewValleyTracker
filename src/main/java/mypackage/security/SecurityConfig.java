@@ -9,19 +9,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login**", "/error", "/css/**", "/js/**").permitAll() // Сюди пускаємо всіх
-                        .anyRequest().authenticated() // На інші сторінки - тільки після логіну
+                        // Дозволяємо доступ до головної, стилів та картинок для всіх
+                        .requestMatchers("/", "/login**", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .anyRequest().authenticated() // Все інше - тільки після входу
                 )
+                // НАЛАШТУВАННЯ ДЛЯ ЗВИЧАЙНОГО ЛОГІНУ (з логіном і паролем)
+                .formLogin(form -> form
+                        .loginPage("/") // Кажемо Spring: "Моя форма лежить на головній сторінці"
+                        .defaultSuccessUrl("/farms", true)
+                        .permitAll()
+                )
+                // НАЛАШТУВАННЯ ДЛЯ GOOGLE ЛОГІНУ
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/farms", true) // Куди перекидати після успішного входу (зміни на свою сторінку ферми)
+                        .loginPage("/") // ГОЛОВНА МАГІЯ ТУТ: забороняємо Spring малювати своє вікно або одразу кидати на Гугл
+                        .defaultSuccessUrl("/farms", true)
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/") // Куди перекидати після виходу
+                        .logoutSuccessUrl("/")
                         .permitAll()
                 );
 
