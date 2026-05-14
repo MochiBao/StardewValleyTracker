@@ -18,7 +18,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // 2. ДОДАЛИ /api/users/** та /index.html у дозволені
-                        .requestMatchers("/", "/index.html", "/api/users/**", "/login**", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/index.html", "/api/users/**", "/login**", "/error", "/styles/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
