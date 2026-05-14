@@ -315,7 +315,7 @@ async function toggleItemProgress(item, element) {
                 }
             }
         } else {
-            alert("Помилка на сервері.");
+            alert("Помилка на сервері");
         }
     } catch (err) {
         console.error("Помилка прогресу", err);
