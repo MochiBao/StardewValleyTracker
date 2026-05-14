@@ -1,4 +1,4 @@
-package mypackage.security;
+package mypackage.security; // Перевір свою назву пакету
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,25 +9,25 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // 1. ВИМИКАЄМО CSRF (Обов'язково для JS fetch запитів)
+                .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
-                        // Дозволяємо доступ до головної, стилів та картинок для всіх
-                        .requestMatchers("/", "/login**", "/error", "/css/**", "/js/**", "/images/**").permitAll()
-                        .anyRequest().authenticated() // Все інше - тільки після входу
+                        // 2. ДОДАЛИ /api/users/** та /index.html у дозволені
+                        .requestMatchers("/", "/index.html", "/api/users/**", "/login**", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                // НАЛАШТУВАННЯ ДЛЯ ЗВИЧАЙНОГО ЛОГІНУ (з логіном і паролем)
-                .formLogin(form -> form
-                        .loginPage("/") // Кажемо Spring: "Моя форма лежить на головній сторінці"
-                        .defaultSuccessUrl("/farms", true)
-                        .permitAll()
-                )
-                // НАЛАШТУВАННЯ ДЛЯ GOOGLE ЛОГІНУ
+
+                // 3. Налаштування тільки для Google
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/") // ГОЛОВНА МАГІЯ ТУТ: забороняємо Spring малювати своє вікно або одразу кидати на Гугл
-                        .defaultSuccessUrl("/farms", true)
+                        .loginPage("/")
+                        .defaultSuccessUrl("/", true) // Правильно, повертаємо на головну
                 )
+
                 .logout(logout -> logout
                         .logoutSuccessUrl("/")
                         .permitAll()

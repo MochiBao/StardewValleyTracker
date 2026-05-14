@@ -3,6 +3,9 @@ package mypackage.controllers;
 import mypackage.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import mypackage.services.UserService;
 
@@ -33,6 +36,28 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String email = "";
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            OAuth2User oauth2User = ((OAuth2AuthenticationToken) authentication).getPrincipal();
+            email = oauth2User.getAttribute("email");
+        } else {
+            email = authentication.getName();
+        }
+
+        User currentUser = userService.findByEmail(email);
+        if (currentUser != null) {
+            return ResponseEntity.ok(currentUser);
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     public static class AuthRequest {

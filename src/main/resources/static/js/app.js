@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (backToLoginBtn) {
-        backToLoginBtn.onclick = () => location.reload();
+        backToLoginBtn.onclick = () => window.location.href = "/logout";
     }
 
     const tabButtons = document.querySelectorAll('.tab-btn');
@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             renderGrid();
         });
     });
+    checkCurrentSession();
 });
 
 async function handleAuth(e, url) {
@@ -76,6 +77,18 @@ async function handleAuth(e, url) {
         }
     } catch (err) {
         console.error("Сервер не відповідає", err);
+    }
+}
+
+async function checkCurrentSession() {
+    try {
+        const response = await fetch('/api/users/me');
+        if (response.ok) {
+            currentUser = await response.json();
+            showFarmSelectionScreen();
+        }
+    } catch (err) {
+        console.log("Сесії немає, показуємо форму входу.");
     }
 }
 
